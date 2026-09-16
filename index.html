@@ -92,6 +92,9 @@
   }
   .stat .k { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
   .stat .v { font-size: 1.1rem; font-weight: 700; margin-top: 0.2rem; }
+  nav.site-nav { display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
+  nav.site-nav a { color:#c4b5fd; text-decoration:none; font-weight:600; font-size:.9rem; }
+  nav.site-nav a:hover { text-decoration:underline; }
 
 /* PASSWORD_GATE_START */
   body.locked > :not(#pw-gate) { display: none !important; }
@@ -142,7 +145,10 @@
     <h1>Everendile Visit Explorer</h1>
     <div class="sub">Pick a traveler and visit — linear trip-% timeline with co-presence</div>
   </div>
-  <div id="activePill" class="pill Nukhu">Nukhu · Visit 1</div>
+  <div style="display:flex; flex-direction:column; align-items:flex-end; gap:.55rem;">
+    <nav class="site-nav"><a href="donut.html">Donut map — all visits &amp; locations</a></nav>
+    <div id="activePill" class="pill Nukhu">Nukhu · Visit 1</div>
+  </div>
 </header>
 
 <div class="controls">
