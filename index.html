@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Everendile Visit Explorer</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #1a1d24;
+    --border: #2a2f38;
+    --text: #e8eaed;
+    --muted: #9aa0a6;
+    --nukhu: #ef4444;
+    --mirco: #2563eb;
+    --aveline: #16a34a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); min-height: 100vh;
+  }
+  header {
+    padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between;
+  }
+  h1 { font-size: 1.15rem; margin: 0; font-weight: 700; }
+  .sub { color: var(--muted); font-size: 0.85rem; margin-top: 0.2rem; }
+  .controls {
+    display: flex; flex-wrap: wrap; gap: 1rem; align-items: end;
+    padding: 1rem 1.5rem; background: var(--panel); border-bottom: 1px solid var(--border);
+  }
+  .field { display: flex; flex-direction: column; gap: 0.35rem; min-width: 160px; }
+  label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  select, input[type="range"] { accent-color: #a78bfa; }
+  select {
+    background: #0f1115; color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.55rem 0.7rem; font-size: 0.95rem;
+  }
+  .slider-wrap { min-width: 260px; }
+  .visit-readout {
+    font-size: 1.4rem; font-weight: 700; font-variant-numeric: tabular-nums;
+  }
+  .pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.35rem 0.85rem; border-radius: 999px; font-weight: 700; font-size: 0.95rem;
+    white-space: nowrap;
+  }
+  .pill.Nukhu { background: #3f1212; color: #fecaca; }
+  .pill.Mirco { background: #1e3a8a; color: #bfdbfe; }
+  .pill.Aveline { background: #14532d; color: #bbf7d0; }
+  main { padding: 1.25rem 1.5rem 2.5rem; max-width: 980px; margin: 0 auto; }
+  .empty {
+    border: 1px dashed var(--border); border-radius: 12px; padding: 2rem;
+    color: var(--muted); text-align: center; line-height: 1.5;
+  }
+  .rail {
+    position: relative; margin: 1.5rem 0 0.5rem; padding-left: 1.25rem;
+    border-left: 3px solid var(--border);
+  }
+  .beat {
+    position: relative; margin: 0 0 1.25rem; padding: 0.9rem 1rem;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  }
+  .beat::before {
+    content: ""; position: absolute; left: -1.42rem; top: 1.15rem;
+    width: 12px; height: 12px; border-radius: 50%; background: var(--dot, #a78bfa);
+    box-shadow: 0 0 0 3px var(--bg);
+  }
+  .beat.shrouded { opacity: 0.75; border-style: dashed; }
+  .t {
+    font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+  .place { font-size: 1.05rem; font-weight: 700; margin: 0.15rem 0 0.35rem; }
+  .notes { color: #c5c8ce; font-size: 0.9rem; line-height: 1.4; }
+  .with { margin-top: 0.7rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .chip {
+    font-size: 0.85rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 6px;
+    background: #0f1115; border: 1px solid var(--border);
+  }
+  .chip.Nukhu { color: #fecaca; border-color: #7f1d1d; }
+  .chip.Mirco { color: #bfdbfe; border-color: #1e40af; }
+  .chip.Aveline { color: #bbf7d0; border-color: #166534; }
+  .chip.Nopel, .chip.Other { color: #cbd5e1; }
+  .meta { margin-top: 0.35rem; font-size: 0.75rem; color: var(--muted); }
+  .summary {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.75rem; margin-bottom: 1rem;
+  }
+  .stat {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 0.9rem;
+  }
+  .stat .k { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
+  .stat .v { font-size: 1.1rem; font-weight: 700; margin-top: 0.2rem; }
+
+/* PASSWORD_GATE_START */
+  body.locked > :not(#pw-gate) { display: none !important; }
+  #pw-gate {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    background: #0f1115; color: #e8eaed;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  }
+  #pw-gate .card {
+    width: min(420px, 92vw); background: #1a1d24; border: 1px solid #2a2f38;
+    border-radius: 14px; padding: 1.5rem 1.4rem; box-shadow: 0 12px 40px rgba(0,0,0,.45);
+  }
+  #pw-gate h2 { margin: 0 0 .35rem; font-size: 1.15rem; }
+  #pw-gate p { margin: 0 0 1rem; color: #9aa0a6; font-size: .9rem; line-height: 1.4; }
+  #pw-gate label { display:block; font-size:.75rem; color:#9aa0a6; text-transform:uppercase; letter-spacing:.04em; margin-bottom:.35rem; }
+  #pw-gate input {
+    width: 100%; background:#0f1115; color:#e8eaed; border:1px solid #2a2f38;
+    border-radius:8px; padding:.65rem .75rem; font-size:1rem; margin-bottom:.75rem;
+  }
+  #pw-gate button {
+    width:100%; border:0; border-radius:8px; padding:.7rem; font-weight:700; font-size:.95rem;
+    background:#7c3aed; color:white; cursor:pointer;
+  }
+  #pw-gate button:hover { background:#6d28d9; }
+  #pw-gate .err { color:#fca5a5; font-size:.85rem; min-height:1.2em; margin:.35rem 0 .5rem; }
+  body:not(.locked) #pw-gate { display: none !important; }
+/* PASSWORD_GATE_END */
+</style>
+</head>
+<body class="locked">
+
+<!-- PASSWORD_GATE_START -->
+<div id="pw-gate" role="dialog" aria-modal="true" aria-labelledby="pw-title">
+  <div class="card">
+    <h2 id="pw-title">Everendile Visit Explorer</h2>
+    <p>Password required. This is a private writing tool.</p>
+    <label for="pw-input">Password</label>
+    <input id="pw-input" type="password" autocomplete="current-password" autofocus />
+    <div class="err" id="pw-err" aria-live="polite"></div>
+    <button type="button" id="pw-go">Unlock</button>
+  </div>
+</div>
+<!-- PASSWORD_GATE_END -->
+
+<header>
+  <div>
+    <h1>Everendile Visit Explorer</h1>
+    <div class="sub">Pick a traveler and visit — linear trip-% timeline with co-presence</div>
+  </div>
+  <div id="activePill" class="pill Nukhu">Nukhu · Visit 1</div>
+</header>
+
+<div class="controls">
+  <div class="field">
+    <label for="family">Character</label>
+    <select id="family">
+      <option value="Nukhu">Nukhu (red)</option>
+      <option value="Mirco">Mirco (blue)</option>
+      <option value="Aveline">Aveline (green)</option>
+    </select>
+  </div>
+  <div class="field slider-wrap">
+    <label for="visit">Visit number <span id="visitLabel" class="visit-readout">1</span></label>
+    <input id="visit" type="range" min="1" max="12" value="1"/>
+  </div>
+</div>
+
+<main>
+  <div class="summary" id="summary"></div>
+  <div id="content"></div>
+</main>
+
+<script>
+const DATA = {
+  "timelines": {
+    "Mirco-V01": {
+      "instance_id": "Mirco-V01",
+      "family": "Mirco",
+      "visit": 1,
+      "code": "M1",
+      "beats": [
+        {
+          "beat_id": "B010",
+          "t": 0.0,
+          "label": "Malenma / tulip land (0%)",
+          "place_id": "L_MALENMA",
+          "place": "Malenma field",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Lands alone in tulip/Malenma field \u2014 0%",
+          "code": "M1",
+          "with": []
+        },
+        {
+          "beat_id": "B020",
+          "t": 10.0,
+          "label": "Blues-and-purples village (10%)",
+          "place_id": "L_PELI_VILLAGE",
+          "place": "Blues-and-purples village",
+          "shrouded": false,
+          "exception": "",
+          "notes": "With Nopel-NATIVE (realm loop, not traveler) at village \u2014 10%",
+          "code": "M1",
+          "with": [
+            {
+              "instance_id": "Nopel-NATIVE",
+              "code": "Nopel",
+              "family": "Nopel",
+              "visit": null,
+              "shrouded": false,
+              "notes": "Pale-blue guide; same looping behavior encountered by all 12 visit-instances"
+            }
+          ]
+        },
+        {
+          "beat_id": "B030",
+          "t": 40.0,
+          "label": "Opal axe given (40%)",
+          "place_id": "L_PELI_VILLAGE",
+          "place": "Blues-and-purples village",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Leaves village; given opal axe \u2014 40%",
+          "code": "M1",
+          "with": []
+        },
+        {
+          "beat_id": "B035",
+          "t": 45.0,
+          "label": "Rolling hills (45%)",
+          "place_id": "L_HILLS",
+          "place": "Rolling hills",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Rolling hills on foot \u2014 45%",
+          "code": "M1",
+          "with": []
+        },
+        {
+          "beat_id": "B040",
+          "t": 50.0,
+          "label": "Red Forest / pink elephants (50%)",
+          "place_id": "L_REDFORST",
+          "place": "Red Forest",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Pink elephants / forage \u2014 50%",
+          "code": "M1",
+          "with": []
+        },
+        {
+          "beat_id": "B050",
+          "t": 60.0,
+          "label": "Yellow cabin / cottage (60%)",
+          "place_id": "L_YELLOW",
+          "place": "Yellow cottage",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Marcus V1 meets Aveline-V08 at cottage (author lock)",
+          "code": "M1",
+          "with": [
+            {
+              "instance_id": "Aveline-V08",
+              "code": "A8",
+              "family": "Aveline",
+              "visit": 8,
+              "shrouded": false,
+              "notes": "Yellow cottage MEET: Aveline-V08 + Mirco-V01 (author lock). Beatrice dual reading still open (vision vs authentic)."
+            }
+          ]
+        },
+        {
+          "beat_id": "B080",
+          "t": 99.0,
+          "label": "Mirco-V01 cyclone approach (99%)",
+          "place_id": "L_CYCLONE",
+          "place": "Cyclone / tornado tower",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Approaches tower then ejects to Earth",
+          "code": "M1",
+          "with": [
+            {
+              "instance_id": "Aveline-V08",
+              "code": "A8",
+              "family": "Aveline",
+              "visit": 8,
+              "shrouded": false,
+              "notes": "Beatrice: they journey cottage\u2192tower together; Mirco-V01 ejects on approach. Aveline-V08 still at tower unless Matt says otherwise."
+            }
+          ]
+        }
+      ]
+    },
+    "Nukhu-V03": {
+      "instance_id": "Nukhu-V03",
+      "family": "Nukhu",
+      "visit": 3,
+      "code": "N3",
+      "beats": [
+        {
+          "beat_id": "B060",
+          "t": 80.0,
+          "label": "Speaver fight (80%)",
+          "place_id": "L_UNSPEC",
+          "place": "Unspecified / TBD",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Speaver / cotton-candy FIGHT \u2014 Nukhu-V03 + Mirco-V04 + Aveline-V12 (author lock)",
+          "code": "N3",
+          "with": [
+            {
+              "instance_id": "Mirco-V04",
+              "code": "M4",
+              "family": "Mirco",
+              "visit": 4,
+              "shrouded": false,
+              "notes": "Speaver fight with Nukhu-V03 + Aveline-V12 (author lock)"
+            },
+            {
+              "instance_id": "Aveline-V12",
+              "code": "A12",
+              "family": "Aveline",
+              "visit": 12,
+              "shrouded": false,
+              "notes": "Speaver fight with Nukhu-V03 + Mirco-V04 (author lock); her Visit 12"
+            },
+            {
+              "instance_id": "Aveline-V02",
+              "code": "A2\u2020",
+              "family": "Aveline",
+              "visit": 2,
+              "shrouded": true,
+              "notes": "Shrouded observer at speaver fight (author lock); same locus as Aveline-V12 + Nukhu-V03 + Mirco-V04"
+            }
+          ]
+        },
+        {
+          "beat_id": "B065",
+          "t": 85.0,
+          "label": "Abyss aftermath (85%)",
+          "place_id": "L_ABYSS",
+          "place": "Abyss overlook",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Abyss overlook after speaver defeat with Mirco-V04 + Aveline-V12 \u2014 same trio after fight (author lock)",
+          "code": "N3",
+          "with": [
+            {
+              "instance_id": "Mirco-V04",
+              "code": "M4",
+              "family": "Mirco",
+              "visit": 4,
+              "shrouded": false,
+              "notes": "Abyss with Nukhu-V03 + Aveline-V12 after speaver \u2014 same trio after fight (author lock)"
+            },
+            {
+              "instance_id": "Aveline-V12",
+              "code": "A12",
+              "family": "Aveline",
+              "visit": 12,
+              "shrouded": false,
+              "notes": "Aveline Visit 12 at abyss with Nukhu-V03 + Mirco-V04 after speaver \u2014 same trio after fight (author lock)"
+            }
+          ]
+        }
+      ]
+    },
+    "Nukhu-V05": {
+      "instance_id": "Nukhu-V05",
+      "family": "Nukhu",
+      "visit": 5,
+      "code": "N5",
+      "beats": [
+        {
+          "beat_id": "B070",
+          "t": 60.0,
+          "label": "N12 death / V5 kill at cyclone (~60%)",
+          "place_id": "L_CYCLONE",
+          "place": "Cyclone / tornado tower",
+          "shrouded": false,
+          "exception": "intentional_cross_visit",
+          "notes": "Visit-5 villain kill at cyclone ~60% \u2014 SAME MOMENT as Nukhu-V12 death (author lock)",
+          "code": "N5",
+          "with": [
+            {
+              "instance_id": "Nukhu-V12",
+              "code": "N12",
+              "family": "Nukhu",
+              "visit": 12,
+              "shrouded": false,
+              "notes": "Nukhu-V12 death at cyclone ~60% \u2014 SAME MOMENT as V5 kill (author lock)"
+            }
+          ]
+        }
+      ]
+    },
+    "Nukhu-V12": {
+      "instance_id": "Nukhu-V12",
+      "family": "Nukhu",
+      "visit": 12,
+      "code": "N12",
+      "beats": [
+        {
+          "beat_id": "B069",
+          "t": 58.0,
+          "label": "Nukhu-V12 realizes the loop (~58%)",
+          "place_id": "L_CYCLONE",
+          "place": "Cyclone / tornado tower",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Realizes the loop just before death at cyclone",
+          "code": "N12",
+          "with": []
+        },
+        {
+          "beat_id": "B070",
+          "t": 60.0,
+          "label": "N12 death / V5 kill at cyclone (~60%)",
+          "place_id": "L_CYCLONE",
+          "place": "Cyclone / tornado tower",
+          "shrouded": false,
+          "exception": "intentional_cross_visit",
+          "notes": "Nukhu-V12 death at cyclone ~60% \u2014 SAME MOMENT as V5 kill (author lock)",
+          "code": "N12",
+          "with": [
+            {
+              "instance_id": "Nukhu-V05",
+              "code": "N5",
+              "family": "Nukhu",
+              "visit": 5,
+              "shrouded": false,
+              "notes": "Visit-5 villain kill at cyclone ~60% \u2014 SAME MOMENT as Nukhu-V12 death (author lock)"
+            }
+          ]
+        }
+      ]
+    },
+    "Aveline-V08": {
+      "instance_id": "Aveline-V08",
+      "family": "Aveline",
+      "visit": 8,
+      "code": "A8",
+      "beats": [
+        {
+          "beat_id": "B050",
+          "t": 60.0,
+          "label": "Yellow cabin / cottage (60%)",
+          "place_id": "L_YELLOW",
+          "place": "Yellow cottage",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Yellow cottage MEET: Aveline-V08 + Mirco-V01 (author lock). Beatrice dual reading still open (vision vs authentic).",
+          "code": "A8",
+          "with": [
+            {
+              "instance_id": "Mirco-V01",
+              "code": "M1",
+              "family": "Mirco",
+              "visit": 1,
+              "shrouded": false,
+              "notes": "Marcus V1 meets Aveline-V08 at cottage (author lock)"
+            }
+          ]
+        },
+        {
+          "beat_id": "B080",
+          "t": 99.0,
+          "label": "Mirco-V01 cyclone approach (99%)",
+          "place_id": "L_CYCLONE",
+          "place": "Cyclone / tornado tower",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Beatrice: they journey cottage\u2192tower together; Mirco-V01 ejects on approach. Aveline-V08 still at tower unless Matt says otherwise.",
+          "code": "A8",
+          "with": [
+            {
+              "instance_id": "Mirco-V01",
+              "code": "M1",
+              "family": "Mirco",
+              "visit": 1,
+              "shrouded": false,
+              "notes": "Approaches tower then ejects to Earth"
+            }
+          ]
+        }
+      ]
+    },
+    "Mirco-V04": {
+      "instance_id": "Mirco-V04",
+      "family": "Mirco",
+      "visit": 4,
+      "code": "M4",
+      "beats": [
+        {
+          "beat_id": "B060",
+          "t": 80.0,
+          "label": "Speaver fight (80%)",
+          "place_id": "L_UNSPEC",
+          "place": "Unspecified / TBD",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Speaver fight with Nukhu-V03 + Aveline-V12 (author lock)",
+          "code": "M4",
+          "with": [
+            {
+              "instance_id": "Nukhu-V03",
+              "code": "N3",
+              "family": "Nukhu",
+              "visit": 3,
+              "shrouded": false,
+              "notes": "Speaver / cotton-candy FIGHT \u2014 Nukhu-V03 + Mirco-V04 + Aveline-V12 (author lock)"
+            },
+            {
+              "instance_id": "Aveline-V12",
+              "code": "A12",
+              "family": "Aveline",
+              "visit": 12,
+              "shrouded": false,
+              "notes": "Speaver fight with Nukhu-V03 + Mirco-V04 (author lock); her Visit 12"
+            },
+            {
+              "instance_id": "Aveline-V02",
+              "code": "A2\u2020",
+              "family": "Aveline",
+              "visit": 2,
+              "shrouded": true,
+              "notes": "Shrouded observer at speaver fight (author lock); same locus as Aveline-V12 + Nukhu-V03 + Mirco-V04"
+            }
+          ]
+        },
+        {
+          "beat_id": "B065",
+          "t": 85.0,
+          "label": "Abyss aftermath (85%)",
+          "place_id": "L_ABYSS",
+          "place": "Abyss overlook",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Abyss with Nukhu-V03 + Aveline-V12 after speaver \u2014 same trio after fight (author lock)",
+          "code": "M4",
+          "with": [
+            {
+              "instance_id": "Nukhu-V03",
+              "code": "N3",
+              "family": "Nukhu",
+              "visit": 3,
+              "shrouded": false,
+              "notes": "Abyss overlook after speaver defeat with Mirco-V04 + Aveline-V12 \u2014 same trio after fight (author lock)"
+            },
+            {
+              "instance_id": "Aveline-V12",
+              "code": "A12",
+              "family": "Aveline",
+              "visit": 12,
+              "shrouded": false,
+              "notes": "Aveline Visit 12 at abyss with Nukhu-V03 + Mirco-V04 after speaver \u2014 same trio after fight (author lock)"
+            }
+          ]
+        }
+      ]
+    },
+    "Aveline-V12": {
+      "instance_id": "Aveline-V12",
+      "family": "Aveline",
+      "visit": 12,
+      "code": "A12",
+      "beats": [
+        {
+          "beat_id": "B060",
+          "t": 80.0,
+          "label": "Speaver fight (80%)",
+          "place_id": "L_UNSPEC",
+          "place": "Unspecified / TBD",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Speaver fight with Nukhu-V03 + Mirco-V04 (author lock); her Visit 12",
+          "code": "A12",
+          "with": [
+            {
+              "instance_id": "Nukhu-V03",
+              "code": "N3",
+              "family": "Nukhu",
+              "visit": 3,
+              "shrouded": false,
+              "notes": "Speaver / cotton-candy FIGHT \u2014 Nukhu-V03 + Mirco-V04 + Aveline-V12 (author lock)"
+            },
+            {
+              "instance_id": "Mirco-V04",
+              "code": "M4",
+              "family": "Mirco",
+              "visit": 4,
+              "shrouded": false,
+              "notes": "Speaver fight with Nukhu-V03 + Aveline-V12 (author lock)"
+            },
+            {
+              "instance_id": "Aveline-V02",
+              "code": "A2\u2020",
+              "family": "Aveline",
+              "visit": 2,
+              "shrouded": true,
+              "notes": "Shrouded observer at speaver fight (author lock); same locus as Aveline-V12 + Nukhu-V03 + Mirco-V04"
+            }
+          ]
+        },
+        {
+          "beat_id": "B065",
+          "t": 85.0,
+          "label": "Abyss aftermath (85%)",
+          "place_id": "L_ABYSS",
+          "place": "Abyss overlook",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Aveline Visit 12 at abyss with Nukhu-V03 + Mirco-V04 after speaver \u2014 same trio after fight (author lock)",
+          "code": "A12",
+          "with": [
+            {
+              "instance_id": "Nukhu-V03",
+              "code": "N3",
+              "family": "Nukhu",
+              "visit": 3,
+              "shrouded": false,
+              "notes": "Abyss overlook after speaver defeat with Mirco-V04 + Aveline-V12 \u2014 same trio after fight (author lock)"
+            },
+            {
+              "instance_id": "Mirco-V04",
+              "code": "M4",
+              "family": "Mirco",
+              "visit": 4,
+              "shrouded": false,
+              "notes": "Abyss with Nukhu-V03 + Aveline-V12 after speaver \u2014 same trio after fight (author lock)"
+            }
+          ]
+        }
+      ]
+    },
+    "Aveline-V02": {
+      "instance_id": "Aveline-V02",
+      "family": "Aveline",
+      "visit": 2,
+      "code": "A2",
+      "beats": [
+        {
+          "beat_id": "B060",
+          "t": 80.0,
+          "label": "Speaver fight (80%)",
+          "place_id": "L_UNSPEC",
+          "place": "Unspecified / TBD",
+          "shrouded": true,
+          "exception": "",
+          "notes": "Shrouded observer at speaver fight (author lock); same locus as Aveline-V12 + Nukhu-V03 + Mirco-V04",
+          "code": "A2\u2020",
+          "with": [
+            {
+              "instance_id": "Nukhu-V03",
+              "code": "N3",
+              "family": "Nukhu",
+              "visit": 3,
+              "shrouded": false,
+              "notes": "Speaver / cotton-candy FIGHT \u2014 Nukhu-V03 + Mirco-V04 + Aveline-V12 (author lock)"
+            },
+            {
+              "instance_id": "Mirco-V04",
+              "code": "M4",
+              "family": "Mirco",
+              "visit": 4,
+              "shrouded": false,
+              "notes": "Speaver fight with Nukhu-V03 + Aveline-V12 (author lock)"
+            },
+            {
+              "instance_id": "Aveline-V12",
+              "code": "A12",
+              "family": "Aveline",
+              "visit": 12,
+              "shrouded": false,
+              "notes": "Speaver fight with Nukhu-V03 + Mirco-V04 (author lock); her Visit 12"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "catalog": [
+    {
+      "instance_id": "Nukhu-V01",
+      "family": "Nukhu",
+      "visit": 1,
+      "code": "N1",
+      "has_data": false
+    },
+    {
+      "instance_id": "Nukhu-V02",
+      "family": "Nukhu",
+      "visit": 2,
+      "code": "N2",
+      "has_data": false
+    },
+    {
+      "instance_id": "Nukhu-V03",
+      "family": "Nukhu",
+      "visit": 3,
+      "code": "N3",
+      "has_data": true
+    },
+    {
+      "instance_id": "Nukhu-V04",
+      "family": "Nukhu",
+      "visit": 4,
+      "code": "N4",
+      "has_data": false
+    },
+    {
+      "instance_id": "Nukhu-V05",
+      "family": "Nukhu",
+      "visit": 5,
+      "code": "N5",
+      "has_data": true
+    },
+    {
+      "instance_id": "Nukhu-V06",
+      "family": "Nukhu",
+      "visit": 6,
+      "code": "N6",
+      "has_data": false
+    },
+    {
+      "instance_id": "Nukhu-V07",
+      "family": "Nukhu",
+      "visit": 7,
+      "code": "N7",
+      "has_data": false
+    },
+    {
+      "instance_id": "Nukhu-V08",
+      "family": "Nukhu",
+      "visit": 8,
+      "code": "N8",
+      "has_data": false
+    },
+    {
+      "instance_id": "Nukhu-V09",
+      "family": "Nukhu",
+      "visit": 9,
+      "code": "N9",
+      "has_data": false
+    },
+    {
+      "instance_id": "Nukhu-V10",
+      "family": "Nukhu",
+      "visit": 10,
+      "code": "N10",
+      "has_data": false
+    },
+    {
+      "instance_id": "Nukhu-V11",
+      "family": "Nukhu",
+      "visit": 11,
+      "code": "N11",
+      "has_data": false
+    },
+    {
+      "instance_id": "Nukhu-V12",
+      "family": "Nukhu",
+      "visit": 12,
+      "code": "N12",
+      "has_data": true
+    },
+    {
+      "instance_id": "Mirco-V01",
+      "family": "Mirco",
+      "visit": 1,
+      "code": "M1",
+      "has_data": true
+    },
+    {
+      "instance_id": "Mirco-V02",
+      "family": "Mirco",
+      "visit": 2,
+      "code": "M2",
+      "has_data": false
+    },
+    {
+      "instance_id": "Mirco-V03",
+      "family": "Mirco",
+      "visit": 3,
+      "code": "M3",
+      "has_data": false
+    },
+    {
+      "instance_id": "Mirco-V04",
+      "family": "Mirco",
+      "visit": 4,
+      "code": "M4",
+      "has_data": true
+    },
+    {
+      "instance_id": "Mirco-V05",
+      "family": "Mirco",
+      "visit": 5,
+      "code": "M5",
+      "has_data": false
+    },
+    {
+      "instance_id": "Mirco-V06",
+      "family": "Mirco",
+      "visit": 6,
+      "code": "M6",
+      "has_data": false
+    },
+    {
+      "instance_id": "Mirco-V07",
+      "family": "Mirco",
+      "visit": 7,
+      "code": "M7",
+      "has_data": false
+    },
+    {
+      "instance_id": "Mirco-V08",
+      "family": "Mirco",
+      "visit": 8,
+      "code": "M8",
+      "has_data": false
+    },
+    {
+      "instance_id": "Mirco-V09",
+      "family": "Mirco",
+      "visit": 9,
+      "code": "M9",
+      "has_data": false
+    },
+    {
+      "instance_id": "Mirco-V10",
+      "family": "Mirco",
+      "visit": 10,
+      "code": "M10",
+      "has_data": false
+    },
+    {
+      "instance_id": "Mirco-V11",
+      "family": "Mirco",
+      "visit": 11,
+      "code": "M11",
+      "has_data": false
+    },
+    {
+      "instance_id": "Mirco-V12",
+      "family": "Mirco",
+      "visit": 12,
+      "code": "M12",
+      "has_data": false
+    },
+    {
+      "instance_id": "Aveline-V01",
+      "family": "Aveline",
+      "visit": 1,
+      "code": "A1",
+      "has_data": false
+    },
+    {
+      "instance_id": "Aveline-V02",
+      "family": "Aveline",
+      "visit": 2,
+      "code": "A2",
+      "has_data": true
+    },
+    {
+      "instance_id": "Aveline-V03",
+      "family": "Aveline",
+      "visit": 3,
+      "code": "A3",
+      "has_data": false
+    },
+    {
+      "instance_id": "Aveline-V04",
+      "family": "Aveline",
+      "visit": 4,
+      "code": "A4",
+      "has_data": false
+    },
+    {
+      "instance_id": "Aveline-V05",
+      "family": "Aveline",
+      "visit": 5,
+      "code": "A5",
+      "has_data": false
+    },
+    {
+      "instance_id": "Aveline-V06",
+      "family": "Aveline",
+      "visit": 6,
+      "code": "A6",
+      "has_data": false
+    },
+    {
+      "instance_id": "Aveline-V07",
+      "family": "Aveline",
+      "visit": 7,
+      "code": "A7",
+      "has_data": false
+    },
+    {
+      "instance_id": "Aveline-V08",
+      "family": "Aveline",
+      "visit": 8,
+      "code": "A8",
+      "has_data": true
+    },
+    {
+      "instance_id": "Aveline-V09",
+      "family": "Aveline",
+      "visit": 9,
+      "code": "A9",
+      "has_data": false
+    },
+    {
+      "instance_id": "Aveline-V10",
+      "family": "Aveline",
+      "visit": 10,
+      "code": "A10",
+      "has_data": false
+    },
+    {
+      "instance_id": "Aveline-V11",
+      "family": "Aveline",
+      "visit": 11,
+      "code": "A11",
+      "has_data": false
+    },
+    {
+      "instance_id": "Aveline-V12",
+      "family": "Aveline",
+      "visit": 12,
+      "code": "A12",
+      "has_data": true
+    }
+  ],
+  "beats_all": [
+    {
+      "beat_id": "B001",
+      "t": 0.0,
+      "label": "TRIP START"
+    },
+    {
+      "beat_id": "B010",
+      "t": 0.0,
+      "label": "Malenma / tulip land (0%)"
+    },
+    {
+      "beat_id": "B020",
+      "t": 10.0,
+      "label": "Blues-and-purples village (10%)"
+    },
+    {
+      "beat_id": "B030",
+      "t": 40.0,
+      "label": "Opal axe given (40%)"
+    },
+    {
+      "beat_id": "B035",
+      "t": 45.0,
+      "label": "Rolling hills (45%)"
+    },
+    {
+      "beat_id": "B040",
+      "t": 50.0,
+      "label": "Red Forest / pink elephants (50%)"
+    },
+    {
+      "beat_id": "B069",
+      "t": 58.0,
+      "label": "Nukhu-V12 realizes the loop (~58%)"
+    },
+    {
+      "beat_id": "B050",
+      "t": 60.0,
+      "label": "Yellow cabin / cottage (60%)"
+    },
+    {
+      "beat_id": "B070",
+      "t": 60.0,
+      "label": "N12 death / V5 kill at cyclone (~60%)"
+    },
+    {
+      "beat_id": "B060",
+      "t": 80.0,
+      "label": "Speaver fight (80%)"
+    },
+    {
+      "beat_id": "B065",
+      "t": 85.0,
+      "label": "Abyss aftermath (85%)"
+    },
+    {
+      "beat_id": "B080",
+      "t": 99.0,
+      "label": "Mirco-V01 cyclone approach (99%)"
+    },
+    {
+      "beat_id": "B100",
+      "t": 100.0,
+      "label": "TRIP END"
+    }
+  ]
+};
+
+const familyEl = document.getElementById('family');
+const visitEl = document.getElementById('visit');
+const visitLabel = document.getElementById('visitLabel');
+const content = document.getElementById('content');
+const summary = document.getElementById('summary');
+const activePill = document.getElementById('activePill');
+
+const COLORS = { Nukhu: '#ef4444', Mirco: '#2563eb', Aveline: '#16a34a' };
+
+function instanceId(family, visit) {
+  return `${family}-V${String(visit).padStart(2,'0')}`;
+}
+
+/** Full UI label — never abbreviate (e.g. Mirco · Visit 1). */
+function personLabel(family, visit, shrouded) {
+  if (!family || family === 'Nopel') return 'Nopel';
+  if (visit == null || visit === '') return family;
+  let s = `${family} · Visit ${Number(visit)}`;
+  if (shrouded) s += ' (shrouded)';
+  return s;
+}
+
+function labelFromWith(w) {
+  return personLabel(w.family, w.visit, w.shrouded);
+}
+
+function visitsWithData() {
+  return Object.values(DATA.timelines)
+    .filter(tl => tl.beats && tl.beats.length)
+    .map(tl => personLabel(tl.family, tl.visit, false))
+    .sort((a, b) => a.localeCompare(b));
+}
+
+function render() {
+  const family = familyEl.value;
+  const visit = Number(visitEl.value);
+  visitLabel.textContent = visit;
+  const full = personLabel(family, visit, false);
+  activePill.textContent = full;
+  activePill.className = 'pill ' + family;
+
+  const iid = instanceId(family, visit);
+  const tl = DATA.timelines[iid];
+
+  if (!tl || !tl.beats.length) {
+    summary.innerHTML = '';
+    const hints = visitsWithData().join('; ');
+    content.innerHTML = `<div class="empty">
+      <strong>${full}</strong> has no logged presence yet.<br/>
+      Only visits with tracker rows show a path. Try: ${hints}.
+    </div>`;
+    return;
+  }
+
+  const meets = new Set();
+  tl.beats.forEach(b => b.with.forEach(w => meets.add(labelFromWith(w))));
+
+  summary.innerHTML = `
+    <div class="stat"><div class="k">Character · visit</div><div class="v">${full}</div></div>
+    <div class="stat"><div class="k">Beats logged</div><div class="v">${tl.beats.length}</div></div>
+    <div class="stat"><div class="k">Trip span</div><div class="v">${tl.beats[0].t}% → ${tl.beats[tl.beats.length-1].t}%</div></div>
+    <div class="stat"><div class="k">Meets</div><div class="v">${meets.size ? [...meets].join('; ') : '—'}</div></div>
+  `;
+
+  const rail = document.createElement('div');
+  rail.className = 'rail';
+  rail.style.setProperty('--dot', COLORS[family]);
+
+  tl.beats.forEach(b => {
+    const el = document.createElement('div');
+    el.className = 'beat' + (b.shrouded ? ' shrouded' : '');
+    el.style.setProperty('--dot', COLORS[family]);
+    const chips = b.with.length
+      ? b.with.map(w => `<span class="chip ${w.family || 'Other'}" title="${(w.notes || '').replace(/"/g, '&quot;')}">${labelFromWith(w)}</span>`).join('')
+      : `<span class="chip Other">alone</span>`;
+    el.innerHTML = `
+      <div class="t">${b.t}% · ${b.label || b.beat_id}</div>
+      <div class="place">${b.place}${b.shrouded ? ' · shrouded' : ''}</div>
+      <div class="notes">${b.notes || ''}</div>
+      <div class="with">${chips}</div>
+      <div class="meta">${b.beat_id}${b.exception ? ' · ' + b.exception : ''}</div>
+    `;
+    rail.appendChild(el);
+  });
+
+  content.innerHTML = '';
+  content.appendChild(rail);
+}
+
+familyEl.addEventListener('change', render);
+visitEl.addEventListener('input', render);
+render();
+</script>
+<script>
+
+/* PASSWORD_GATE_START */
+(function () {
+  const EXPECTED = 'f8e866246469116e41993870c67763023ee296ed135895a14673798dc7ceaf66';
+  const KEY = 'everendile-visit-explorer-unlocked';
+  const body = document.body;
+  const input = document.getElementById('pw-input');
+  const err = document.getElementById('pw-err');
+  const go = document.getElementById('pw-go');
+
+  async function sha256hex(s) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function unlock() {
+    body.classList.remove('locked');
+    try { sessionStorage.setItem(KEY, EXPECTED); } catch (e) {}
+  }
+
+  async function tryUnlock(fromStorage) {
+    if (fromStorage) {
+      try {
+        if (sessionStorage.getItem(KEY) === EXPECTED) { unlock(); return; }
+      } catch (e) {}
+    }
+    const guess = (input && input.value) || '';
+    if (!guess) { err.textContent = 'Enter the password.'; return; }
+    const h = await sha256hex(guess);
+    if (h === EXPECTED) {
+      err.textContent = '';
+      unlock();
+    } else {
+      err.textContent = 'Wrong password.';
+      if (input) { input.select(); }
+    }
+  }
+
+  if (go) go.addEventListener('click', () => tryUnlock(false));
+  if (input) input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') tryUnlock(false);
+  });
+  tryUnlock(true);
+})();
+/* PASSWORD_GATE_END */
+
+</script>
+</body>
+</html>
