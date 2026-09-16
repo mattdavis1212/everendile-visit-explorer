@@ -194,13 +194,13 @@ const DATA = {
         },
         {
           "beat_id": "B020",
-          "t": 10.0,
-          "label": "Blues-and-purples village (10%)",
+          "t": 4.0,
+          "label": "Blues-and-purples village (4%)",
           "place_id": "L_PELI_VILLAGE",
           "place": "Blues-and-purples village",
           "shrouded": false,
           "exception": "",
-          "notes": "With Nopel-NATIVE (realm loop, not traveler) at village \u2014 10%",
+          "notes": "With Nopel-NATIVE (realm loop, not traveler) at village \u2014 Q1 D8 / 4%",
           "code": "M1",
           "with": [
             {
@@ -215,49 +215,49 @@ const DATA = {
         },
         {
           "beat_id": "B030",
-          "t": 40.0,
-          "label": "Opal axe given (40%)",
+          "t": 23.0,
+          "label": "Opal axe / leave village (23%)",
           "place_id": "L_PELI_VILLAGE",
           "place": "Blues-and-purples village",
           "shrouded": false,
           "exception": "",
-          "notes": "Leaves village; given opal axe \u2014 40%",
+          "notes": "Leaves village; given opal axe \u2014 Q1 D46 / 23%",
           "code": "M1",
           "with": []
         },
         {
           "beat_id": "B035",
-          "t": 45.0,
-          "label": "Rolling hills (45%)",
+          "t": 26.0,
+          "label": "Rolling hills (26%)",
           "place_id": "L_HILLS",
           "place": "Rolling hills",
           "shrouded": false,
           "exception": "",
-          "notes": "Rolling hills on foot \u2014 45%",
+          "notes": "Rolling hills on foot \u2014 Q2 D2 / 26%",
           "code": "M1",
           "with": []
         },
         {
           "beat_id": "B040",
-          "t": 50.0,
-          "label": "Red Forest / pink elephants (50%)",
+          "t": 26.5,
+          "label": "Red Forest / pink elephants (26.5%)",
           "place_id": "L_REDFORST",
           "place": "Red Forest",
           "shrouded": false,
           "exception": "",
-          "notes": "Pink elephants / forage \u2014 50%",
+          "notes": "Pink elephants / forage \u2014 Q2 D3 / 26.5%",
           "code": "M1",
           "with": []
         },
         {
           "beat_id": "B050",
-          "t": 60.0,
-          "label": "Yellow cabin / cottage (60%)",
+          "t": 28.0,
+          "label": "Yellow cabin / cottage arrive (28%)",
           "place_id": "L_YELLOW",
           "place": "Yellow cottage",
           "shrouded": false,
           "exception": "",
-          "notes": "Marcus V1 meets Aveline-V08 at cottage (author lock)",
+          "notes": "Marcus V1 arrives yellow cottage; meets Aveline-V08 \u2014 Q2 D6 / 28%",
           "code": "M1",
           "with": [
             {
@@ -266,19 +266,40 @@ const DATA = {
               "family": "Aveline",
               "visit": 8,
               "shrouded": false,
-              "notes": "Yellow cottage MEET: Aveline-V08 + Mirco-V01 (author lock). Beatrice dual reading still open (vision vs authentic)."
+              "notes": "Yellow cottage MEET: Aveline-V08 + Mirco-V01 \u2014 Q2 D6 / 28%. Beatrice dual reading still open (vision vs authentic)."
+            }
+          ]
+        },
+        {
+          "beat_id": "B055",
+          "t": 57.5,
+          "label": "Leave yellow cottage (57.5%)",
+          "place_id": "L_YELLOW",
+          "place": "Yellow cottage",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Leaves yellow cottage \u2014 Q3 D15 / 57.5%; continues toward tower with Aveline-V08 (Beatrice)",
+          "code": "M1",
+          "with": [
+            {
+              "instance_id": "Aveline-V08",
+              "code": "A8",
+              "family": "Aveline",
+              "visit": 8,
+              "shrouded": false,
+              "notes": "Leaves yellow cottage with Mirco-V01 \u2014 Q3 D15 / 57.5% (Beatrice cottage\u2192tower journey)"
             }
           ]
         },
         {
           "beat_id": "B080",
-          "t": 99.0,
-          "label": "Mirco-V01 cyclone approach (99%)",
+          "t": 100.0,
+          "label": "Mirco-V01 tornado tower arrive (100%)",
           "place_id": "L_CYCLONE",
           "place": "Cyclone / tornado tower",
           "shrouded": false,
           "exception": "",
-          "notes": "Approaches tower then ejects to Earth",
+          "notes": "Arrives tornado tower then ejects to Earth \u2014 Q4 D50 / 100%",
           "code": "M1",
           "with": [
             {
@@ -287,7 +308,78 @@ const DATA = {
               "family": "Aveline",
               "visit": 8,
               "shrouded": false,
-              "notes": "Beatrice: they journey cottage\u2192tower together; Mirco-V01 ejects on approach. Aveline-V08 still at tower unless Matt says otherwise."
+              "notes": "At tower with Mirco-V01 on arrival/eject \u2014 Q4 D50 / 100%. Aveline-V08 still at tower unless Matt says otherwise."
+            }
+          ]
+        }
+      ]
+    },
+    "Aveline-V08": {
+      "instance_id": "Aveline-V08",
+      "family": "Aveline",
+      "visit": 8,
+      "code": "A8",
+      "beats": [
+        {
+          "beat_id": "B050",
+          "t": 28.0,
+          "label": "Yellow cabin / cottage arrive (28%)",
+          "place_id": "L_YELLOW",
+          "place": "Yellow cottage",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Yellow cottage MEET: Aveline-V08 + Mirco-V01 \u2014 Q2 D6 / 28%. Beatrice dual reading still open (vision vs authentic).",
+          "code": "A8",
+          "with": [
+            {
+              "instance_id": "Mirco-V01",
+              "code": "M1",
+              "family": "Mirco",
+              "visit": 1,
+              "shrouded": false,
+              "notes": "Marcus V1 arrives yellow cottage; meets Aveline-V08 \u2014 Q2 D6 / 28%"
+            }
+          ]
+        },
+        {
+          "beat_id": "B055",
+          "t": 57.5,
+          "label": "Leave yellow cottage (57.5%)",
+          "place_id": "L_YELLOW",
+          "place": "Yellow cottage",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Leaves yellow cottage with Mirco-V01 \u2014 Q3 D15 / 57.5% (Beatrice cottage\u2192tower journey)",
+          "code": "A8",
+          "with": [
+            {
+              "instance_id": "Mirco-V01",
+              "code": "M1",
+              "family": "Mirco",
+              "visit": 1,
+              "shrouded": false,
+              "notes": "Leaves yellow cottage \u2014 Q3 D15 / 57.5%; continues toward tower with Aveline-V08 (Beatrice)"
+            }
+          ]
+        },
+        {
+          "beat_id": "B080",
+          "t": 100.0,
+          "label": "Mirco-V01 tornado tower arrive (100%)",
+          "place_id": "L_CYCLONE",
+          "place": "Cyclone / tornado tower",
+          "shrouded": false,
+          "exception": "",
+          "notes": "At tower with Mirco-V01 on arrival/eject \u2014 Q4 D50 / 100%. Aveline-V08 still at tower unless Matt says otherwise.",
+          "code": "A8",
+          "with": [
+            {
+              "instance_id": "Mirco-V01",
+              "code": "M1",
+              "family": "Mirco",
+              "visit": 1,
+              "shrouded": false,
+              "notes": "Arrives tornado tower then ejects to Earth \u2014 Q4 D50 / 100%"
             }
           ]
         }
@@ -328,7 +420,7 @@ const DATA = {
             },
             {
               "instance_id": "Aveline-V02",
-              "code": "A2\u2020",
+              "code": "A2",
               "family": "Aveline",
               "visit": 2,
               "shrouded": true,
@@ -362,126 +454,6 @@ const DATA = {
               "visit": 12,
               "shrouded": false,
               "notes": "Aveline Visit 12 at abyss with Nukhu-V03 + Mirco-V04 after speaver \u2014 same trio after fight (author lock)"
-            }
-          ]
-        }
-      ]
-    },
-    "Nukhu-V05": {
-      "instance_id": "Nukhu-V05",
-      "family": "Nukhu",
-      "visit": 5,
-      "code": "N5",
-      "beats": [
-        {
-          "beat_id": "B070",
-          "t": 60.0,
-          "label": "N12 death / V5 kill at cyclone (~60%)",
-          "place_id": "L_CYCLONE",
-          "place": "Cyclone / tornado tower",
-          "shrouded": false,
-          "exception": "intentional_cross_visit",
-          "notes": "Visit-5 villain kill at cyclone ~60% \u2014 SAME MOMENT as Nukhu-V12 death (author lock)",
-          "code": "N5",
-          "with": [
-            {
-              "instance_id": "Nukhu-V12",
-              "code": "N12",
-              "family": "Nukhu",
-              "visit": 12,
-              "shrouded": false,
-              "notes": "Nukhu-V12 death at cyclone ~60% \u2014 SAME MOMENT as V5 kill (author lock)"
-            }
-          ]
-        }
-      ]
-    },
-    "Nukhu-V12": {
-      "instance_id": "Nukhu-V12",
-      "family": "Nukhu",
-      "visit": 12,
-      "code": "N12",
-      "beats": [
-        {
-          "beat_id": "B069",
-          "t": 58.0,
-          "label": "Nukhu-V12 realizes the loop (~58%)",
-          "place_id": "L_CYCLONE",
-          "place": "Cyclone / tornado tower",
-          "shrouded": false,
-          "exception": "",
-          "notes": "Realizes the loop just before death at cyclone",
-          "code": "N12",
-          "with": []
-        },
-        {
-          "beat_id": "B070",
-          "t": 60.0,
-          "label": "N12 death / V5 kill at cyclone (~60%)",
-          "place_id": "L_CYCLONE",
-          "place": "Cyclone / tornado tower",
-          "shrouded": false,
-          "exception": "intentional_cross_visit",
-          "notes": "Nukhu-V12 death at cyclone ~60% \u2014 SAME MOMENT as V5 kill (author lock)",
-          "code": "N12",
-          "with": [
-            {
-              "instance_id": "Nukhu-V05",
-              "code": "N5",
-              "family": "Nukhu",
-              "visit": 5,
-              "shrouded": false,
-              "notes": "Visit-5 villain kill at cyclone ~60% \u2014 SAME MOMENT as Nukhu-V12 death (author lock)"
-            }
-          ]
-        }
-      ]
-    },
-    "Aveline-V08": {
-      "instance_id": "Aveline-V08",
-      "family": "Aveline",
-      "visit": 8,
-      "code": "A8",
-      "beats": [
-        {
-          "beat_id": "B050",
-          "t": 60.0,
-          "label": "Yellow cabin / cottage (60%)",
-          "place_id": "L_YELLOW",
-          "place": "Yellow cottage",
-          "shrouded": false,
-          "exception": "",
-          "notes": "Yellow cottage MEET: Aveline-V08 + Mirco-V01 (author lock). Beatrice dual reading still open (vision vs authentic).",
-          "code": "A8",
-          "with": [
-            {
-              "instance_id": "Mirco-V01",
-              "code": "M1",
-              "family": "Mirco",
-              "visit": 1,
-              "shrouded": false,
-              "notes": "Marcus V1 meets Aveline-V08 at cottage (author lock)"
-            }
-          ]
-        },
-        {
-          "beat_id": "B080",
-          "t": 99.0,
-          "label": "Mirco-V01 cyclone approach (99%)",
-          "place_id": "L_CYCLONE",
-          "place": "Cyclone / tornado tower",
-          "shrouded": false,
-          "exception": "",
-          "notes": "Beatrice: they journey cottage\u2192tower together; Mirco-V01 ejects on approach. Aveline-V08 still at tower unless Matt says otherwise.",
-          "code": "A8",
-          "with": [
-            {
-              "instance_id": "Mirco-V01",
-              "code": "M1",
-              "family": "Mirco",
-              "visit": 1,
-              "shrouded": false,
-              "notes": "Approaches tower then ejects to Earth"
             }
           ]
         }
@@ -522,7 +494,7 @@ const DATA = {
             },
             {
               "instance_id": "Aveline-V02",
-              "code": "A2\u2020",
+              "code": "A2",
               "family": "Aveline",
               "visit": 2,
               "shrouded": true,
@@ -596,7 +568,7 @@ const DATA = {
             },
             {
               "instance_id": "Aveline-V02",
-              "code": "A2\u2020",
+              "code": "A2",
               "family": "Aveline",
               "visit": 2,
               "shrouded": true,
@@ -675,6 +647,76 @@ const DATA = {
               "visit": 12,
               "shrouded": false,
               "notes": "Speaver fight with Nukhu-V03 + Mirco-V04 (author lock); her Visit 12"
+            }
+          ]
+        }
+      ]
+    },
+    "Nukhu-V05": {
+      "instance_id": "Nukhu-V05",
+      "family": "Nukhu",
+      "visit": 5,
+      "code": "N5",
+      "beats": [
+        {
+          "beat_id": "B070",
+          "t": 60.0,
+          "label": "N12 death / V5 kill at cyclone (~60%)",
+          "place_id": "L_CYCLONE",
+          "place": "Cyclone / tornado tower",
+          "shrouded": false,
+          "exception": "intentional_cross_visit",
+          "notes": "Visit-5 villain kill at cyclone ~60% \u2014 SAME MOMENT as Nukhu-V12 death (author lock)",
+          "code": "N5",
+          "with": [
+            {
+              "instance_id": "Nukhu-V12",
+              "code": "N12",
+              "family": "Nukhu",
+              "visit": 12,
+              "shrouded": false,
+              "notes": "Nukhu-V12 death at cyclone ~60% \u2014 SAME MOMENT as V5 kill (author lock)"
+            }
+          ]
+        }
+      ]
+    },
+    "Nukhu-V12": {
+      "instance_id": "Nukhu-V12",
+      "family": "Nukhu",
+      "visit": 12,
+      "code": "N12",
+      "beats": [
+        {
+          "beat_id": "B069",
+          "t": 58.0,
+          "label": "Nukhu-V12 realizes the loop (~58%)",
+          "place_id": "L_CYCLONE",
+          "place": "Cyclone / tornado tower",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Realizes the loop just before death at cyclone",
+          "code": "N12",
+          "with": []
+        },
+        {
+          "beat_id": "B070",
+          "t": 60.0,
+          "label": "N12 death / V5 kill at cyclone (~60%)",
+          "place_id": "L_CYCLONE",
+          "place": "Cyclone / tornado tower",
+          "shrouded": false,
+          "exception": "intentional_cross_visit",
+          "notes": "Nukhu-V12 death at cyclone ~60% \u2014 SAME MOMENT as V5 kill (author lock)",
+          "code": "N12",
+          "with": [
+            {
+              "instance_id": "Nukhu-V05",
+              "code": "N5",
+              "family": "Nukhu",
+              "visit": 5,
+              "shrouded": false,
+              "notes": "Visit-5 villain kill at cyclone ~60% \u2014 SAME MOMENT as Nukhu-V12 death (author lock)"
             }
           ]
         }
@@ -948,33 +990,38 @@ const DATA = {
     },
     {
       "beat_id": "B020",
-      "t": 10.0,
-      "label": "Blues-and-purples village (10%)"
+      "t": 4.0,
+      "label": "Blues-and-purples village (4%)"
     },
     {
       "beat_id": "B030",
-      "t": 40.0,
-      "label": "Opal axe given (40%)"
+      "t": 23.0,
+      "label": "Opal axe / leave village (23%)"
     },
     {
       "beat_id": "B035",
-      "t": 45.0,
-      "label": "Rolling hills (45%)"
+      "t": 26.0,
+      "label": "Rolling hills (26%)"
     },
     {
       "beat_id": "B040",
-      "t": 50.0,
-      "label": "Red Forest / pink elephants (50%)"
+      "t": 26.5,
+      "label": "Red Forest / pink elephants (26.5%)"
+    },
+    {
+      "beat_id": "B050",
+      "t": 28.0,
+      "label": "Yellow cabin / cottage arrive (28%)"
+    },
+    {
+      "beat_id": "B055",
+      "t": 57.5,
+      "label": "Leave yellow cottage (57.5%)"
     },
     {
       "beat_id": "B069",
       "t": 58.0,
       "label": "Nukhu-V12 realizes the loop (~58%)"
-    },
-    {
-      "beat_id": "B050",
-      "t": 60.0,
-      "label": "Yellow cabin / cottage (60%)"
     },
     {
       "beat_id": "B070",
@@ -993,8 +1040,8 @@ const DATA = {
     },
     {
       "beat_id": "B080",
-      "t": 99.0,
-      "label": "Mirco-V01 cyclone approach (99%)"
+      "t": 100.0,
+      "label": "Mirco-V01 tornado tower arrive (100%)"
     },
     {
       "beat_id": "B100",
