@@ -272,7 +272,7 @@ const DATA = {
               "family": "Aveline",
               "visit": 8,
               "shrouded": false,
-              "notes": "Yellow cottage MEET: Aveline-V08 + Mirco-V01 \u2014 Q2 D6 / 28%. Beatrice dual reading still open (vision vs authentic)."
+              "notes": "Yellow cottage MEET: Aveline-V08 + Mirco-V01 \u2014 Q2 D6 / 28%. Aveline-V08 already at cottage since 25% (B049, author lock 2026-10-02). Beatrice dual reading still open (vision vs authentic)."
             }
           ]
         },
@@ -327,6 +327,18 @@ const DATA = {
       "code": "A8",
       "beats": [
         {
+          "beat_id": "B049",
+          "t": 25.0,
+          "label": "Aveline-V08 arrives yellow cottage (25%)",
+          "place_id": "L_YELLOW",
+          "place": "Yellow cottage",
+          "shrouded": false,
+          "exception": "",
+          "notes": "Arrives yellow cottage \u2014 Q1 D50 / 25%; waits there until Mirco-V01 arrives 28% (B050).",
+          "code": "A8",
+          "with": []
+        },
+        {
           "beat_id": "B050",
           "t": 28.0,
           "label": "Yellow cabin / cottage arrive (28%)",
@@ -334,7 +346,7 @@ const DATA = {
           "place": "Yellow cottage",
           "shrouded": false,
           "exception": "",
-          "notes": "Yellow cottage MEET: Aveline-V08 + Mirco-V01 \u2014 Q2 D6 / 28%. Beatrice dual reading still open (vision vs authentic).",
+          "notes": "Yellow cottage MEET: Aveline-V08 + Mirco-V01 \u2014 Q2 D6 / 28%. Aveline-V08 already at cottage since 25% (B049, author lock 2026-10-02). Beatrice dual reading still open (vision vs authentic).",
           "code": "A8",
           "with": [
             {
@@ -876,7 +888,7 @@ const DATA = {
           "place": "Yellow cottage",
           "shrouded": false,
           "exception": "",
-          "notes": "Quickly travels to yellow cottage; with Aveline-V10 \u2014 Q1 D4 / ~2%",
+          "notes": "Quickly travels to yellow cottage; with Aveline-V10 \u2014 Q1 D4 / ~2% (together until both leave at 23%)",
           "code": "M2",
           "with": [
             {
@@ -885,19 +897,19 @@ const DATA = {
               "family": "Aveline",
               "visit": 10,
               "shrouded": false,
-              "notes": "At yellow cottage with Mirco-V02 \u2014 Q1 D4 / ~2% (co-located until ~5%)"
+              "notes": "At yellow cottage with Mirco-V02 \u2014 Q1 D4 / ~2% (together until both leave at 23%)"
             }
           ]
         },
         {
-          "beat_id": "B006",
-          "t": 5.0,
-          "label": "Mirco-V02 leaves yellow cottage (~5%)",
+          "beat_id": "B032",
+          "t": 23.0,
+          "label": "Mirco-V02 + Aveline-V10 leave yellow cottage (23%)",
           "place_id": "L_YELLOW",
           "place": "Yellow cottage",
           "shrouded": false,
           "exception": "",
-          "notes": "Leaves yellow cottage after being with Aveline-V10 since ~2% \u2014 Q1 D10 / ~5%, \"before M1 arrives\" (Matt). Next destination not stated.",
+          "notes": "Leaves yellow cottage with Aveline-V10 \u2014 Q1 D46 / 23% (5% before M1 arrives at 28%). Next destination not stated.",
           "code": "M2",
           "with": [
             {
@@ -906,7 +918,7 @@ const DATA = {
               "family": "Aveline",
               "visit": 10,
               "shrouded": false,
-              "notes": "With Mirco-V02 at yellow cottage until he leaves \u2014 Q1 D10 / ~5%. Her own departure/whereabouts after ~5% not stated by Matt."
+              "notes": "Leaves yellow cottage with Mirco-V02 \u2014 Q1 D46 / 23% (5% before M1 arrives at 28%). Next destination not stated."
             }
           ]
         }
@@ -926,7 +938,7 @@ const DATA = {
           "place": "Yellow cottage",
           "shrouded": false,
           "exception": "",
-          "notes": "At yellow cottage with Mirco-V02 \u2014 Q1 D4 / ~2% (co-located until ~5%)",
+          "notes": "At yellow cottage with Mirco-V02 \u2014 Q1 D4 / ~2% (together until both leave at 23%)",
           "code": "A10",
           "with": [
             {
@@ -935,19 +947,19 @@ const DATA = {
               "family": "Mirco",
               "visit": 2,
               "shrouded": false,
-              "notes": "Quickly travels to yellow cottage; with Aveline-V10 \u2014 Q1 D4 / ~2%"
+              "notes": "Quickly travels to yellow cottage; with Aveline-V10 \u2014 Q1 D4 / ~2% (together until both leave at 23%)"
             }
           ]
         },
         {
-          "beat_id": "B006",
-          "t": 5.0,
-          "label": "Mirco-V02 leaves yellow cottage (~5%)",
+          "beat_id": "B032",
+          "t": 23.0,
+          "label": "Mirco-V02 + Aveline-V10 leave yellow cottage (23%)",
           "place_id": "L_YELLOW",
           "place": "Yellow cottage",
           "shrouded": false,
           "exception": "",
-          "notes": "With Mirco-V02 at yellow cottage until he leaves \u2014 Q1 D10 / ~5%. Her own departure/whereabouts after ~5% not stated by Matt.",
+          "notes": "Leaves yellow cottage with Mirco-V02 \u2014 Q1 D46 / 23% (5% before M1 arrives at 28%). Next destination not stated.",
           "code": "A10",
           "with": [
             {
@@ -956,7 +968,7 @@ const DATA = {
               "family": "Mirco",
               "visit": 2,
               "shrouded": false,
-              "notes": "Leaves yellow cottage after being with Aveline-V10 since ~2% \u2014 Q1 D10 / ~5%, \"before M1 arrives\" (Matt). Next destination not stated."
+              "notes": "Leaves yellow cottage with Aveline-V10 \u2014 Q1 D46 / 23% (5% before M1 arrives at 28%). Next destination not stated."
             }
           ]
         }
@@ -1239,11 +1251,6 @@ const DATA = {
       "label": "Blues-and-purples village (4%)"
     },
     {
-      "beat_id": "B006",
-      "t": 5.0,
-      "label": "Mirco-V02 leaves yellow cottage (~5%)"
-    },
-    {
       "beat_id": "B042",
       "t": 7.5,
       "label": "Nukhu-V01 enters Red Forest (7.5%)"
@@ -1257,6 +1264,16 @@ const DATA = {
       "beat_id": "B030",
       "t": 23.0,
       "label": "Opal axe / leave village (23%)"
+    },
+    {
+      "beat_id": "B032",
+      "t": 23.0,
+      "label": "Mirco-V02 + Aveline-V10 leave yellow cottage (23%)"
+    },
+    {
+      "beat_id": "B049",
+      "t": 25.0,
+      "label": "Aveline-V08 arrives yellow cottage (25%)"
     },
     {
       "beat_id": "B035",
