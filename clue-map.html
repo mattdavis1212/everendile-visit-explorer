@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="icon" href="favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png"/>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+  <link rel="manifest" href="site.webmanifest"/>
+  <meta name="theme-color" content="#5b2d8e"/>
+<title>Everendile Clue Map</title>
+<style>
+  :root { --bg:#0f1115; --panel:#1a1d24; --border:#2a2f38; --text:#e8eaed; --muted:#9aa0a6; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+  body.locked > :not(#pw-gate) { display:none !important; }
+  body:not(.locked) #pw-gate { display:none !important; }
+  #pw-gate { position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center; background:#0f1115; }
+  #pw-gate .card { width:min(420px,92vw); background:#1a1d24; border:1px solid #2a2f38; border-radius:14px; padding:1.5rem 1.4rem; }
+  #pw-gate h2 { margin:0 0 .35rem; font-size:1.15rem; }
+  #pw-gate p { margin:0 0 1rem; color:#9aa0a6; font-size:.9rem; line-height:1.4; }
+  #pw-gate label { display:block; font-size:.75rem; color:#9aa0a6; text-transform:uppercase; letter-spacing:.04em; margin-bottom:.35rem; }
+  #pw-gate input { width:100%; background:#0f1115; color:#e8eaed; border:1px solid #2a2f38; border-radius:8px; padding:.65rem .75rem; font-size:1rem; margin-bottom:.75rem; }
+  #pw-gate button { width:100%; border:0; border-radius:8px; padding:.7rem; font-weight:700; background:#7c3aed; color:white; cursor:pointer; }
+  #pw-gate .err { color:#fca5a5; font-size:.85rem; min-height:1.2em; margin:.35rem 0 .5rem; }
+  header { padding:1rem 1.5rem; border-bottom:1px solid var(--border); display:flex; flex-wrap:wrap; gap:.75rem 1.25rem; align-items:center; justify-content:space-between; }
+  h1 { font-size:1.15rem; margin:0; }
+  .sub { color:var(--muted); font-size:.85rem; margin-top:.2rem; }
+  nav a { color:#c4b5fd; text-decoration:none; font-weight:600; font-size:.95rem; }
+  nav a:hover { text-decoration:underline; }
+  main { padding:1rem 1.25rem 2rem; max-width:1200px; margin:0 auto; }
+  .frame { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:.75rem; }
+  .doc h1{font-size:1.4rem;margin:.2rem 0 .6rem} .doc p{line-height:1.55} .doc ul{line-height:1.55;padding-left:1.3rem} .doc li{margin:.3rem 0} .doc strong{color:#c4b5fd} .flag{color:#f59e0b;font-weight:700}
+  img { width:100%; height:auto; display:block; border-radius:8px; }
+  .hint { color:var(--muted); font-size:.85rem; margin-top:.75rem; line-height:1.4; }
+</style>
+</head>
+<body class="locked">
+<div id="pw-gate" role="dialog" aria-modal="true">
+  <div class="card">
+    <h2>Everendile Clue Map</h2>
+    <p>Password required. Same unlock as the Visit Explorer.</p>
+    <label for="pw-input">Password</label>
+    <input id="pw-input" type="password" autocomplete="current-password" autofocus />
+    <div class="err" id="pw-err"></div>
+    <button type="button" id="pw-go">Unlock</button>
+  </div>
+</div>
+<header>
+  <div>
+    <h1>Everendile clue map</h1>
+    <div class="sub">The 12th at Noon (Book 1), Ch. 1–10 · clues and their costs</div>
+  </div>
+  <nav><a href="./">← Back to explorer</a></nav>
+</header>
+<main>
+  <div class="frame doc">
+<h1>The 12th at Noon (Book 1): Clue Map, Ch. 1–10</h1>
+<p>Source: Dropbox /12th at Noon/Manuscript. Ch.10 was checked against Dropbox and matches the local copy. Quotes are exact. <span class="flag">⚑</span> = the clue lands with no real-world cost on the page.</p>
+<p><strong>Ch.1 Happy</strong>
+- Clues: the 12th. "The 12th of December held a vast amount of power over the Kelly family." Beatrice: "we have one month until… until it begins." Twelve paint-chip circles over the bed. The pulsing clock colon.
+- Cost (mother/isolation): "Noah felt more alone than ever." Rage, then guilt, at Beatrice. "He felt sick to his stomach with nerves." He spends $550 on a flight.</p>
+<p><strong>Ch.2 Fall</strong>
+- Clues: woken by light at "12:00 AM". The winking woman (Monica): "unable to shake a sense of déja vu". Bald man and "four peripheral echos". Blind old man (Spitak): "You knew our names too, and you will remember very soon." "I never knew him as Marcus Kelly."
+- Cost (body/job): phone hits his face, "Deep purple bruises." The laptop is smashed. The Grand Central fall: "his head coming into contact with the ground harder than anyone felt comfortable observing." He misses the presentation. Lola: "Like he had seen a monster."</p>
+<p><strong>Ch.3 Awakening</strong>
+- Clues: memory dive into his own birth. Nukhu/Mirco/Aveline at the abyss after the speaver: "I knew you would grow up to be a great man, Noah." First premembering. Father "fell… in a coma for 16 days. The same as you." "Noah… It will happen to you too!" Vision of his father running toward an "indifferent" Noah. Monica is named. A black hole sits in the memory of Jan 7.
+- Cost (injury/mental/family): "he must have sustained a deeper, hallucination-causing injury to his brain." He faints. "No appetite." He missed Christmas. The blackout gives him "enough anxiety to entirely distrust his ability."</p>
+<p><strong>Ch.4 Therapy</strong>
+- Clues: Monica in the park. White room: "We will liberate the people of the Faroughs." The name "Everendile". Speaver. "On the 12th of every month until his 25th birthday." Red forest with "small elephants except for their forked tails". Tornado tower. "A lady with pale blue skin and white hair" (Nopel, not yet named). Grandmother's yellow cottage. The "ruler" who "needed to be eliminated."
+- Cost (therapy/mother): He lies to Beatrice: "I haven't thought about it since you first told me." He hides his gift. In the cognitive test: "Noah's eyes welled up with tears. He regretted the lost time without his family." Dr. Hamadan: "I hesitate to believe what I saw in your MRI." Beatrice: "it can be a very dangerous place."
+- <span class="flag">⚑</span> The red-forest/elephant and tower visions themselves: only "slightly more anxious."</p>
+<p><strong>Ch.5 Routine</strong>
+- Clues: the cottage and the "ruler" quest, in thought only. Premonition gap: he "completely overlooked his promotion."
+- Cost (job/mental): fear at the revolving door, "his heart rate suddenly began to quicken". Megan has taken his role: "Noah's heart dropped… he tasted copper." Then he is promoted. "The blip in his memory seriously concerned Noah."</p>
+<p><strong>Ch.6 Trois</strong>
+- Clues: arrested man: "The police arrested a man in Grand Central about five minutes after you went down… apparently disappeared." Toast with Monica in the white room: "To Everendile." Les Trois eyes match a building in Everendile. Plaque, "plum colored fur". Talisman: "The pendant is called the <em>Mariposa Lily</em>." The 18th-birthday flashback to Marcus's gold watch: "the date as a thin Roman numeral twelve."
+- Cost (relationships/injury): he tells "only the most boring parts" so he won't sound "crazy." Indigo: "Keep an eye on it… blood clot after a concussion." He is "completely brushing off his own well-being." Terrance turns "exasperated" and walks out.
+- <span class="flag">⚑</span> Plaque / Mariposa Lily memory.</p>
+<p><strong>Ch.7 Blackout</strong>
+- Clues: watch vision (box from Mom, Jan 11). Nightmare: Everendile friends "blamed him for allowing the world to end." Monica: "So, you're the one that's going to save us all?" She says Marcus "did not die… Your kind simply cannot stay." Twelve realms. Moons: "Three moons… separate when conflict arises." Castle Indra. Perod. Faroughs. Veternah. Napkin map. Memory of Veternah tower with Plaque ("Spitak told me"). Spitak revealed as the blind man. First mention of "Guillaume". "Mirco".
+- Cost (finances/body/routine): "finding his father's watch took priority over his finances". "He woke in a sweaty panic." He is "unable to stomach more" than a few bites of toast. "He completely lost his routine". He spends the whole day in a blackout.
+- <span class="flag">⚑</span> Veternah/Plaque/Spitak memory. <span class="flag">⚑</span> Moons/realms lesson (it happens inside the blackout).</p>
+<p><strong>Ch.8 Lesson</strong>
+- Clues: mind-space training. On the enemy: "He might eventually prove to be a dastardly adversary." Pelimenoy: "So I do visit them after all." The white rooms of Indra. Spitak's warning to stay "skeptical of the details within memories."
+- Cost (mental/body, all inside the mind-space): a painful-memory cascade (father's last trip, Uncle Bob's funeral, Adam) and "Noah began to hyperventilate". "Feeling bruised… winced from a pain he never experienced before."
+- Real-world job, mother, or relationships: NONE ON PAGE.</p>
+<p><strong>Ch.9 Infancy</strong>
+- Clues: blackout ends at 4:28 PM. Cloaked man on the roof: "wearing a long black cloak with a deep, drooping hood." "This file is corrupted." White smoke. The girl behind the door. Infant dive into Marcus's first trip: "pale blue skin and silver hair; Nopel." Menolde. Opal axe. Elephants, cottage, tower. Second trip: grandmother vanishes, then "the edge of a lake."
+- Cost (mental/body): "Anxiety seemed to be a constant theme of Noah's new life." "Trying not to vomit." After ejecting: "His sides ached and his head pounded." He feels shame and admits "a selfish place."</p>
+<p><strong>Ch.10 Forest</strong>
+- Clues: future dive into the red forest, calling "Guillaume, are you nearby?" Radill: "You're a malenman." Radill: "I do not know what 'elephants' is." Glowing elephants named Butter and Lefty. Teal tunic. Storm: "They think it's coming from the Faroughs." The woman: "Nukhu, you've returned." "The woman he loved," yet he is "trying to recognize" her. "That man— the one that visited while you were out. He seemed deeply disturbed."
+- Cost (body/mental, before the dive only): "his knee buckled… His legs felt like jelly." "He found himself reflecting on the idea of his emotions more often than actually feeling them."
+- <span class="flag">⚑</span> The entire forest dive: no cost on return, and the chapter ends inside the memory.</p>
+<h2>Biggest unconnected stretches</h2>
+<ol>
+<li>Ch.10 forest dive (the bulk of the chapter): no real-world beat after the opening.</li>
+<li>Ch.8 lesson: every cost happens inside the mind-space. Job, mother, therapy and injury are all absent.</li>
+<li>Ch.7 Monica's lesson, from the moons through the Veternah memory: it sits inside a blackout, so its cost (the lost day) only lands in Ch.9.</li>
+<li>Ch.6 Plaque/Mariposa Lily: pure clue.</li>
+<li>Injury/medical thread: after the MRI line (Ch.4) and Indigo's warning (Ch.6), no doctor, scan or symptom is followed up through Ch.10. Ch.10's buckled knee is not tied to it.</li>
+</ol>
+<h2>Open threads at end of Ch.10</h2>
+<ul>
+<li>Guillaume: who he is, and the "meeting with Guillaume during your incapacitation" (Ch.7). Missing from the forest.</li>
+<li>The arrested man (Ch.6). The cloaked man (Ch.9). The corrupted video, the white smoke, the girl.</li>
+<li>The woman Nukhu loves (unidentified). "That man" who visited.</li>
+<li>The enemy/"ruler" and the tower. The speaver fight (only its aftermath is remembered). Aveline's identity.</li>
+<li>Is Marcus/Mirco alive? Monica says he "did not die"; Spitak expected father and son to go "together."</li>
+<li>The watch: not yet arrived (Jan 11 vision). Its three-dial layout echoes the Les Trois eyes. Les Trois's Everendile link.</li>
+<li>Mother's unfinished line: "On January 12th… everything changed." Marcus's December plan "to stop them completely."</li>
+<li>The grandmother and the cottage. The tornado tower. Plaque's "valley of the moon." Veternah.</li>
+<li>Monica: why the distrust, the "slightly Slavic" accent, the white hand markings.</li>
+<li>Elephants: Radill doesn't know them, yet Noah has them in a cave.</li>
+<li>The first trip on the 12th (five days out) has not happened.</li>
+<li>Real world: the MRI, Megan's "strange vibe", Terrance/Indigo, and continuing blackouts.</li>
+</ul>
+  </div>
+</main>
+<script>
+(function () {
+  const EXPECTED = 'f8e866246469116e41993870c67763023ee296ed135895a14673798dc7ceaf66';
+  const KEY = 'everendile-visit-explorer-unlocked';
+  const body = document.body;
+  const input = document.getElementById('pw-input');
+  const err = document.getElementById('pw-err');
+  const go = document.getElementById('pw-go');
+  async function sha256hex(s) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+  function unlock() {
+    body.classList.remove('locked');
+    try { sessionStorage.setItem(KEY, EXPECTED); } catch (e) {}
+  }
+  async function tryUnlock(fromStorage) {
+    if (fromStorage) {
+      try { if (sessionStorage.getItem(KEY) === EXPECTED) { unlock(); return; } } catch (e) {}
+    }
+    const guess = (input && input.value) || '';
+    if (!guess) { err.textContent = 'Enter the password.'; return; }
+    const h = await sha256hex(guess);
+    if (h === EXPECTED) { err.textContent = ''; unlock(); }
+    else { err.textContent = 'Wrong password.'; if (input) input.select(); }
+  }
+  go.addEventListener('click', () => tryUnlock(false));
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryUnlock(false); });
+  tryUnlock(true);
+})();
+</script>
+</body>
+</html>
